@@ -5,12 +5,10 @@ from transformers import AutoTokenizer, AutoModelForCausalLM
 # --- Load model ---
 @st.cache_resource
 def load_model():
+    tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
+    model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-small")
 
-
-tokenizer = AutoTokenizer.from_pretrained("microsoft/DialoGPT-small")
-model = AutoModelForCausalLM.from_pretrained("microsoft/DialoGPT-small")
-
-    device = "mps" if torch.backends.mps.is_available() else "cpu"
+    device = "cpu"   # Streamlit Cloud = CPU
     model.to(device)
 
     return tokenizer, model, device
