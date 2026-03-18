@@ -21,12 +21,19 @@ def chat(prompt):
     inputs = tokenizer(text, return_tensors="pt").to(device)
 
     outputs = model.generate(
-        **inputs,
-        max_length=100,
-        pad_token_id=tokenizer.eos_token_id
-    )
-
-    return tokenizer.decode(outputs[0], skip_special_tokens=True)
+    **inputs,
+    max_new_tokens=50,
+    do_sample=True,
+    temperature=0.7,
+    top_k=50,
+    top_p=0.9,
+    repetition_penalty=1.2,
+    pad_token_id=tokenizer.eos_token_id,
+    eos_token_id=tokenizer.eos_token_id
+)
+    response = tokenizer.decode(outputs[0], skip_special_tokens=True)
+    response = response.split("Bot:")[-1].strip()
+    return response
 
 # --- UI ---
 st.title("🤖 My AI Chatbot")
