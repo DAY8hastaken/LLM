@@ -5,8 +5,8 @@ from transformers import GPT2Tokenizer, GPT2LMHeadModel
 # --- Load model ---
 @st.cache_resource
 def load_model():
-    tokenizer = GPT2Tokenizer.from_pretrained("./my_chatbot")
-    model = GPT2LMHeadModel.from_pretrained("./my_chatbot")
+    tokenizer = GPT2Tokenizer.from_pretrained("distilgpt2")
+    model = GPT2LMHeadModel.from_pretrained("distilgpt2")
 
     device = "mps" if torch.backends.mps.is_available() else "cpu"
     model.to(device)
